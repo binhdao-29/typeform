@@ -1,9 +1,18 @@
+'use client';
+
 import Image from 'next/image';
+import { useState } from 'react';
 
 const SignUp = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <main className="flex h-lvh overflow-hidden">
-      <section className="flex flex-col flex-1 bg-black w-full h-full relative min-h-[90vh] overflow-hidden">
+      <section className="hidden lg:flex flex-col flex-1 bg-black w-full h-full relative min-h-[90vh] overflow-hidden">
         <div className="w-full h-full flex flex-col items-center justify-center">
           <h1 className="text-white text-4xl m-0 mb-[35px] w-[366px] font-normal leading-[44px] text-center">
             Sign up <br /> and come on in
@@ -15,7 +24,28 @@ const SignUp = () => {
 
       <section className="flex-1 basis-[10%] rounded-tl-2xl rounded-bl-2xl p-0 grid overflow-auto w-full h-full relative min-h-[90vh] lg:-ml-4">
         <div className="bg-white grid grid-cols-[0px,auto] grid-rows-[52px,auto,52px] relative w-full">
-          <div className="xs:row-start-1 pt-4 pl-6 row-3 col-1"></div>
+          <div className="xs:row-start-1 pt-4 pl-6 row-3 col-1 row-start-3">
+            <div className="flex gap-2 items-center">
+              <div>
+                <svg height="17" viewBox="0 0 20 20" width="17" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10 0C4.5 0 0 4.5 0 10s4.5 10 10 10 10-4.5 10-10S15.5 0 10 0zM9 17.9C5.1 17.4 2 14 2 10c0-.6.1-1.2.2-1.8L7 13v1c0 1.1.9 2 2 2v1.9zm6.9-2.5c-.3-.8-1-1.4-1.9-1.4h-1v-3c0-.6-.4-1-1-1H6V8h2c.6 0 1-.4 1-1V5h2c1.1 0 2-.9 2-2v-.4c2.9 1.2 5 4.1 5 7.4 0 2.1-.8 4-2.1 5.4z"
+                    fill="#5E5E5E"
+                    fill-rule="evenodd"></path>
+                </svg>
+              </div>
+              <div className="text-[14px] font-normal leading-[1.5] text-darkGray">English</div>
+              <div className="-ml-1">
+                <svg fill="none" height="5" viewBox="0 0 9 5" width="9" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    clip-rule="evenodd"
+                    d="M4.35156 2.80708L2.33394 0.789472C1.78653 0.24205 0.898985 0.242052 0.351563 0.789472L4.35156 4.78946L8.35156 0.789472C7.80411 0.242052 6.91658 0.242052 6.36917 0.789472L4.35156 2.80708Z"
+                    fill="#5E5E5E"
+                    fill-rule="evenodd"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
           <div className="flex items-center justify-end px-6 py-2 text-darkGray col-start-2">
             <p className="mr-2 text-[14px]">Already have an account?</p>
             <div className="inline-flex flex-col items-stretch gap-4 bg-transparent min-w-16 max-w-full w-full md:gap-2 xs:w-auto">
@@ -26,7 +56,7 @@ const SignUp = () => {
               </a>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center justify-self-center  md:max-w-[542px] row-start-2 col-start-2">
+          <div className="flex flex-col items-center justify-center justify-self-center max-w-[256px]  md:max-w-[542px] row-start-2 col-start-2">
             <div className="flex items-center justify-center h-20 md:max-w-[256px]">
               <a aria-label="Typeform" href="/" title="Typeform" target="_top" className="leading-none">
                 <div className="flex">
@@ -50,33 +80,75 @@ const SignUp = () => {
             <h2 className="font-extralight text-[24px] leading-9 text-lightGray mb-6 text-center max-w-full">
               Get better data with conversational forms, surveys, quizzes & more.
             </h2>
-            <div className="flex flex-col w-full md:max-w-[256px]">
-              <div className="flex flex-col items-stretch gap-4 min-w-[140px] max-w-full w-full mb-[15px] xs:w-auto md:gap-2">
-                <a
-                  href="/"
-                  className="inline-flex items-center cursor-pointer font-medium w-full text-[16px] leading-[1.5] text-black transition-all duration-200 ease-out px-4 py-2 rounded-[10px] border border-black hover:opacity-80">
-                  <Image className="-ml-[7px] mr-[27px]" src="/images/google-color.svg" width={20} height={20} alt="google logo" />
-                  Sign up with Google
-                </a>
-              </div>
-              <div className="flex flex-col items-stretch gap-4 min-w-[140px] max-w-full w-full xs:w-auto md:gap-2">
-                <a
-                  href="/"
-                  className="inline-flex items-center cursor-pointer font-medium w-full text-[16px] leading-[1.5] text-black transition-all duration-200 ease-out px-4 py-2 rounded-[10px] border border-black hover:opacity-80">
-                  <Image className="-ml-[6px] mr-[18px]" src="/images/microsoft-icon.png" width={20} height={20} alt="google logo" />
-                  Sign up with Microsoft
-                </a>
+            <div className="w-full md:max-w-[256px]">
+              <form className="max-w-md mx-auto">
+                <div className="mb-[15px]">
+                  <div className="w-full mb-[15px] h-10 inline-block border border-extraLightGray rounded-[3px]">
+                    <input
+                      type="email"
+                      className="h-full w-full m-0 px-[6px] py-2 rounded-[3px] text-[16px] leading-4 border-0 placeholder-extraLightGray"
+                      placeholder="Email"
+                      autoFocus
+                    />
+                  </div>
+                  <div className="w-full h-10 inline-block border border-extraLightGray rounded-[3px] relative">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      className="h-full w-full m-0 px-[6px] py-2 rounded-[3px] text-[16px] leading-4 border-0 placeholder-extraLightGray"
+                      placeholder="Password"
+                      required
+                    />
+                    <Image
+                      onClick={handleTogglePassword}
+                      className="!text-extraLightGray absolute top-3 right-4 cursor-pointer"
+                      src={showPassword ? 'images/hide-password.svg' : '/images/show-password.svg'}
+                      width={14}
+                      height={14}
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label id="label-terms_and_consents" className="block text-sm leading-[18px] mb-4 pl-[30px] relative">
+                    <input
+                      id="terms_and_consents"
+                      type="checkbox"
+                      className="absolute top-0 left-0 w-5 h-5 m-0 outline-none rounded-[3px] border-0 border-extraLightGray transition duration-150 ease-in"
+                    />
+                    I agree to Typeform’s&nbsp;
+                    <a className="underline" rel="noopener" target="_blank" href="https://www.typeform.com/terms-service/">
+                      Terms of Service
+                    </a>
+                    ,&nbsp;
+                    <a className="underline" rel="noopener" target="_blank" href="https://www.typeform.com/privacy-policy/">
+                      Privacy Policy
+                    </a>{' '}
+                    and&nbsp;
+                    <a className="underline" rel="noopener" target="_blank" href="https://www.typeform.com/privacy-policy/">
+                      Data Processing Agreement
+                    </a>
+                    .
+                  </label>
+                </div>
+              </form>
+            </div>
+            <div className="pl-[30px] pb-[15px] pt-2 w-full md:max-w-[256px]">
+              <div className="flex items-baseline cursor-pointer justify-between leading-8 m-0 w-full">
+                <p className="text-[14px] m-0">See options</p>
+                <div className="mr-2 rotate-180">
+                  <svg width="12" height="7" viewBox="0 0 12 7" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M6.00008 2.94976L8.87876 5.82845C9.65981 6.6095 10.9261 6.60949 11.7072 5.82844L6.00008 0.121338L0.292969 5.82844C1.07402 6.60949 2.34035 6.60949 3.1214 5.82844L6.00008 2.94976Z"></path>
+                  </svg>
+                </div>
               </div>
             </div>
-            <div className="my-[25px] text-center h-[1px]">
-              <span className="text-[14px] text-lightGray relative -top-[9px]">OR</span>
-            </div>
-            <div className="flex flex-col w-full md:max-w-[256px]">
-              <div className="inline-flex flex-col items-stretch gap-4 min-w-[140px] max-w-full xs:w-auto md:gap-2">
-                <button className="inline-block cursor-pointer text-center font-medium text-[16px] leading-[1.6] text-white transition-all duration-200 ease-out px-4 py-2 rounded-[10px] bg-black">
-                  Sign up with email
-                </button>
-              </div>
+            <div className="flex items-center justify-center w-full sm:max-w-full">
+              <button className="h-10 leading-[1.4] w-full cursor-pointer text-[16px] text-white border-none p-0 rounded-[3px] bg-black sm:max-w-[230px]">
+                Create my free account
+              </button>
             </div>
           </div>
         </div>
