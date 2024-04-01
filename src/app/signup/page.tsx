@@ -17,7 +17,7 @@ const SignUp = () => {
           <h1 className="text-white text-4xl m-0 mb-[35px] w-[366px] font-normal leading-[44px] text-center">
             Sign up <br /> and come on in
           </h1>
-          <Image src="/images/bg-type-front.png" alt="Background image" width={366} height={300} />
+          <Image src="/images/bg-type-front.png" alt="Background image" width={366} height={300} className="mb-1" />
           <p className="text-white text-[14px] leading-5 absolute bottom-6 mb-5">© Typeform</p>
         </div>
       </section>
