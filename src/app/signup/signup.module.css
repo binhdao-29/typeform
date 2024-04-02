@@ -106,3 +106,23 @@
   background-color: rgb(255, 255, 255);
   border: 6px solid rgb(25, 25, 25);
 }
+
+.inputError {
+  color: rgb(193, 59, 47);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0px;
+  padding: 8px 0px 6px 20px;
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.textError::before {
+  content: '';
+  background: url('/images/warning.svg') 50% center repeat;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  left: 0px;
+  top: 8px;
+}

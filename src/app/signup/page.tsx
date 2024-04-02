@@ -9,6 +9,18 @@ const SignUp = () => {
   const [openChangeLanguage, setOpenChangeLanguage] = useState(false);
   const [openCollapse, setOpenCollapse] = useState(false);
 
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    agreeCheckbox: false,
+  });
+
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+    agreeCheckbox: '',
+  });
+
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -19,6 +31,47 @@ const SignUp = () => {
 
   const handleToggleCollapse = () => {
     setOpenCollapse(!openCollapse);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, checked } = e.target;
+    if (name === 'agreeCheckbox') {
+      setFormData({
+        ...formData,
+        agreeCheckbox: checked,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    let errors = {} as { email: string; password: string; agreeCheckbox: string };
+
+    if (!formData.email) {
+      errors.email = 'This field cannot be left blank';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = 'Enter a valid email address';
+    }
+
+    if (!formData.password) {
+      errors.password = 'This field cannot be left blank';
+    } else if (!/(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/.test(formData.password)) {
+      errors.password = 'Use 8 or more characters with a mix of letters, numbers and symbols';
+    }
+
+    if (!formData.agreeCheckbox) {
+      errors.agreeCheckbox = 'Please accept the terms and conditions to finish the signup';
+    }
+
+    if (Object.keys(errors).length !== 0) {
+      setErrors(errors);
+    }
   };
 
   return (
@@ -104,16 +157,29 @@ const SignUp = () => {
             <div className="w-full md:max-w-[256px]">
               <form className="max-w-md mx-auto">
                 <div className="mb-[15px]">
-                  <div className="w-full mb-[15px] h-10 inline-block border border-extraLightGray rounded-[3px]">
+                  <div className="w-full h-10 inline-block border border-extraLightGray rounded-[3px]">
                     <input
-                      type="email"
-                      className="h-full w-full m-0 px-[6px] py-2 rounded-[3px] text-[16px] leading-4 border-0 placeholder-extraLightGray"
-                      placeholder="Email"
                       autoFocus
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="h-full w-full m-0 px-[6px] py-2 rounded-[3px] text-[16px] leading-4 border-0 placeholder-extraLightGray"
                     />
                   </div>
-                  <div className="w-full h-10 inline-block border border-extraLightGray rounded-[3px] relative">
+                  <p className={styles.inputError}>
+                    {errors.email && (
+                      <span className={styles.textError} role="img" aria-label="Error">
+                        {errors.email}
+                      </span>
+                    )}
+                  </p>
+                  <div className="w-full h-10 mb-3 inline-block border border-extraLightGray rounded-[3px] relative">
                     <input
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
                       type={showPassword ? 'text' : 'password'}
                       className="h-full w-full m-0 px-[6px] py-2 rounded-[3px] text-[16px] leading-4 border-0 placeholder-extraLightGray"
                       placeholder="Password"
@@ -128,10 +194,17 @@ const SignUp = () => {
                       alt=""
                     />
                   </div>
+                  <p className={styles.inputError}>
+                    {errors.password && (
+                      <span className={styles.textError} role="img" aria-label="Error">
+                        {errors.password}
+                      </span>
+                    )}
+                  </p>
                 </div>
                 <div>
-                  <label id="label-terms_and_consents" className="block text-sm leading-[18px] mb-4 pl-[30px] relative">
-                    <input id="terms_and_consents" type="checkbox" className={styles.inputCheckbox} />I agree to Typeform’s&nbsp;
+                  <label className="block text-sm leading-[18px] mb-4 pl-[30px] relative">
+                    <input name="agreeCheckbox" type="checkbox" className={styles.inputCheckbox} onChange={handleChange} />I agree to Typeform’s&nbsp;
                     <a className="underline" rel="noopener" target="_blank" href="https://www.typeform.com/terms-service/">
                       Terms of Service
                     </a>
@@ -147,6 +220,13 @@ const SignUp = () => {
                   </label>
                 </div>
               </form>
+              <p className={`${styles.inputError} !mb-0`}>
+                {errors.agreeCheckbox && (
+                  <span className={styles.textError} aria-label="Error">
+                    {errors.agreeCheckbox}
+                  </span>
+                )}
+              </p>
             </div>
             <div className="pl-[30px] pb-[15px] pt-2 w-full md:max-w-[256px]">
               <div className="flex items-baseline cursor-pointer justify-between leading-8 m-0 w-full" onClick={handleToggleCollapse}>
@@ -235,7 +315,9 @@ const SignUp = () => {
               </div>
             </div>
             <div className="flex items-center justify-center w-full sm:max-w-full">
-              <button className="h-10 leading-[1.4] w-full cursor-pointer text-[16px] text-white border-none p-0 rounded-[3px] bg-black sm:max-w-[230px]">
+              <button
+                className="h-10 leading-[1.4] w-full cursor-pointer text-[16px] text-white border-none p-0 rounded-[3px] bg-black sm:max-w-[230px]"
+                onClick={handleSubmit}>
                 Create my free account
               </button>
             </div>
