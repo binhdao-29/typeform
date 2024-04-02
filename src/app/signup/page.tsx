@@ -2,12 +2,23 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import styles from './signup.module.css';
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [openChangeLanguage, setOpenChangeLanguage] = useState(false);
+  const [openCollapse, setOpenCollapse] = useState(false);
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleToggleLanguage = () => {
+    setOpenChangeLanguage(!openChangeLanguage);
+  };
+
+  const handleToggleCollapse = () => {
+    setOpenCollapse(!openCollapse);
   };
 
   return (
@@ -24,7 +35,7 @@ const SignUp = () => {
 
       <section className="flex-1 basis-[10%] rounded-tl-2xl rounded-bl-2xl p-0 grid overflow-auto w-full h-full relative min-h-[90vh] lg:-ml-4">
         <div className="bg-white grid grid-cols-[0px,auto] grid-rows-[52px,auto,52px] relative w-full">
-          <div className="xs:row-start-1 pt-4 pl-6 row-3 col-1 row-start-3">
+          <div className="xs:row-start-1 pt-4 pl-6 row-3 col-1 row-start-3 cursor-pointer z-30" onClick={handleToggleLanguage}>
             <div className="flex gap-2 items-center">
               <div>
                 <svg height="17" viewBox="0 0 20 20" width="17" xmlns="http://www.w3.org/2000/svg">
@@ -34,18 +45,28 @@ const SignUp = () => {
                     fill-rule="evenodd"></path>
                 </svg>
               </div>
-              <div className="text-[14px] font-normal leading-[1.5] text-darkGray">English</div>
+              <div className="text-[14px] font-normal leading-[1.5] text-darkGray hover:opacity-80">English</div>
               <div className="-ml-1">
                 <svg fill="none" height="5" viewBox="0 0 9 5" width="9" xmlns="http://www.w3.org/2000/svg">
                   <path
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                     d="M4.35156 2.80708L2.33394 0.789472C1.78653 0.24205 0.898985 0.242052 0.351563 0.789472L4.35156 4.78946L8.35156 0.789472C7.80411 0.242052 6.91658 0.242052 6.36917 0.789472L4.35156 2.80708Z"
                     fill="#5E5E5E"
                     fill-rule="evenodd"></path>
                 </svg>
               </div>
             </div>
+
+            <div className={`${styles.popover} ${openChangeLanguage ? styles.popoverActive : ''}`}>
+              <a href="" className={styles.popoverItem}>
+                <span className="text-black leading-[2.4] font-extralight text-[16px] px-[23px] py-[6px]">English</span>
+              </a>
+              <a href="" className={styles.popoverItem}>
+                <span className="text-black leading-[2.4] font-extralight text-[16px] px-[23px] py-[6px]">Español</span>
+              </a>
+            </div>
           </div>
+
           <div className="flex items-center justify-end px-6 py-2 text-darkGray col-start-2">
             <p className="mr-2 text-[14px]">Already have an account?</p>
             <div className="inline-flex flex-col items-stretch gap-4 bg-transparent min-w-16 max-w-full w-full md:gap-2 xs:w-auto">
@@ -110,12 +131,7 @@ const SignUp = () => {
                 </div>
                 <div>
                   <label id="label-terms_and_consents" className="block text-sm leading-[18px] mb-4 pl-[30px] relative">
-                    <input
-                      id="terms_and_consents"
-                      type="checkbox"
-                      className="absolute top-0 left-0 w-5 h-5 m-0 outline-none rounded-[3px] border-0 border-extraLightGray transition duration-150 ease-in"
-                    />
-                    I agree to Typeform’s&nbsp;
+                    <input id="terms_and_consents" type="checkbox" className={styles.inputCheckbox} />I agree to Typeform’s&nbsp;
                     <a className="underline" rel="noopener" target="_blank" href="https://www.typeform.com/terms-service/">
                       Terms of Service
                     </a>
@@ -133,7 +149,7 @@ const SignUp = () => {
               </form>
             </div>
             <div className="pl-[30px] pb-[15px] pt-2 w-full md:max-w-[256px]">
-              <div className="flex items-baseline cursor-pointer justify-between leading-8 m-0 w-full">
+              <div className="flex items-baseline cursor-pointer justify-between leading-8 m-0 w-full" onClick={handleToggleCollapse}>
                 <p className="text-[14px] m-0">See options</p>
                 <div className="mr-2 rotate-180">
                   <svg width="12" height="7" viewBox="0 0 12 7" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -142,6 +158,79 @@ const SignUp = () => {
                       clip-rule="evenodd"
                       d="M6.00008 2.94976L8.87876 5.82845C9.65981 6.6095 10.9261 6.60949 11.7072 5.82844L6.00008 0.121338L0.292969 5.82844C1.07402 6.60949 2.34035 6.60949 3.1214 5.82844L6.00008 2.94976Z"></path>
                   </svg>
+                </div>
+              </div>
+              <div className={`${styles.collapse} ${openCollapse ? styles.collapseActive : ''}`}>
+                <div className="overflow-auto">
+                  <div className="radio-toggle-group">
+                    <div className="text-sm mb-2">
+                      <label className="text-black leading-5 m-0">Get useful tips, inspiration, and offers via e-communication.</label>
+                    </div>
+                    <div className="flex items-center mb-3">
+                      <label className="inline-flex items-center cursor-pointer">
+                        <input name="radioGroup" value="option1" type="radio" className={styles.inputRadio} />
+                        <div className="ml-3">
+                          <p className="text-sm mr-4 pt-[2px]">Yes</p>
+                        </div>
+                      </label>
+                      <label className="inline-flex items-center cursor-pointer">
+                        <input name="radioGroup" value="option2" type="radio" className={styles.inputRadio} />
+                        <div className="ml-3">
+                          <p className="text-sm pt-[2px]">No</p>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="radio-toggle-group">
+                    <div className="text-sm mb-2">
+                      <label className="text-black leading-5 m-0">
+                        Tailor Typeform to my needs based on my activity.&nbsp;
+                        <a href="/privacy-policy/" target="_blank" rel="noopener" className="text-lightGray">
+                          See Privacy Policy
+                        </a>
+                      </label>
+                    </div>
+                    <div className="flex items-center mb-3">
+                      <label className="inline-flex items-center cursor-pointer">
+                        <input name="radioGroup1" value="option3" type="radio" className={styles.inputRadio} />
+                        <div className="ml-3">
+                          <p className="text-sm mr-4 pt-[2px]">Yes</p>
+                        </div>
+                      </label>
+                      <label className="inline-flex items-center cursor-pointer">
+                        <input name="radioGroup1" value="option4" type="radio" className={styles.inputRadio} />
+                        <div className="ml-3">
+                          <p className="text-sm pt-[2px]">No</p>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="radio-toggle-group">
+                    <div className="text-sm mb-2">
+                      <label className="text-black leading-5 m-0">
+                        Enrich my data with select third parties for more relevant content.
+                        <br />
+                        <a href="/privacy-policy/" target="_blank" rel="noopener" className="text-lightGray">
+                          See Privacy Policy
+                        </a>
+                      </label>
+                    </div>
+                    <div className="flex items-center mb-3">
+                      <label className="inline-flex items-center cursor-pointer">
+                        <input name="radioGroup2" value="option5" type="radio" className={styles.inputRadio} />
+                        <div className="ml-3">
+                          <p className="text-sm mr-4 pt-[2px]">Yes</p>
+                        </div>
+                      </label>
+                      <label className="inline-flex items-center cursor-pointer">
+                        <input name="radioGroup2" value="option6" type="radio" className={styles.inputRadio} />
+                        <div className="ml-3">
+                          <p className="text-sm pt-[2px]">No</p>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                  <p className="text-sm text-[#7f7f7f]">You can update your preferences in your Profile at any time</p>
                 </div>
               </div>
             </div>

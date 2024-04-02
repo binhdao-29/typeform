@@ -1,0 +1,108 @@
+.popover {
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  box-shadow: rgba(25, 25, 25, 0.12) 0px 2px 5px 0.5px;
+  padding: 8px 0px;
+  position: absolute;
+  z-index: 1;
+  transform-origin: left bottom;
+  will-change: transform, opacity;
+  transition: transform 150ms ease-in 0s, opacity 150ms ease-in 0s, visibility 150ms ease-in 0s;
+  top: 48px;
+  pointer-events: initial;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.5);
+}
+
+.popoverActive {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: transform 150ms ease-in 0s, opacity 150ms ease-in 0s, visibility 150ms ease-in 0s;
+}
+
+.popoverItem {
+  appearance: none;
+  margin: 0px;
+  border: none;
+  max-width: 100%;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  min-height: 32px;
+  background-color: rgb(255, 255, 255);
+  text-decoration: none;
+  outline: none;
+  width: 100%;
+  display: flex;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+.popoverItem:hover {
+  background-color: rgb(239, 239, 239);
+}
+
+.collapse {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 200ms ease-in 0s;
+}
+
+.collapseActive {
+  max-height: 305px;
+}
+
+.inputCheckbox {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 20px;
+  height: 20px;
+  margin: 0px;
+  appearance: none;
+  box-shadow: rgb(207, 207, 206) 0px 0px 0px 1px inset;
+  border-radius: 3px;
+  transition: background-color 0.15s ease 0s;
+}
+
+.inputCheckbox:checked {
+  background-color: rgb(25, 25, 25);
+  appearance: none;
+}
+
+.inputCheckbox:focus {
+  outline: none;
+  box-shadow: rgb(255, 255, 255) 0px 0px 0px 1px, rgba(38, 38, 39, 0.4) 0px 0px 0px 3px;
+}
+
+.inputCheckbox:checked::before {
+  content: '';
+  color: rgb(255, 255, 255);
+  background: url('/images/check-white.svg') 50% 4px no-repeat;
+  left: 0px;
+  top: 0px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+}
+
+.inputRadio {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  appearance: none;
+  border-radius: 50%;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  outline: 0px;
+  transition: all 0.2s ease-in-out 0s;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(194, 194, 193);
+}
+
+.inputRadio:checked:enabled {
+  background-color: rgb(255, 255, 255);
+  border: 6px solid rgb(25, 25, 25);
+}
