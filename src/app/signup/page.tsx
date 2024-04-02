@@ -19,6 +19,7 @@ const SignUp = () => {
     email: '',
     password: '',
     agreeCheckbox: '',
+    emailInPassword: '',
   });
 
   const handleTogglePassword = () => {
@@ -40,18 +41,27 @@ const SignUp = () => {
         ...formData,
         agreeCheckbox: checked,
       });
+      setErrors({
+        ...errors,
+        agreeCheckbox: '',
+      });
     } else {
       setFormData({
         ...formData,
         [name]: value,
       });
+      setErrors({
+        ...errors,
+        [name]: '',
+        emailInPassword: '',
+      });
     }
   };
 
-  const handleSubmit = (e: any) => {
+  const handleValidate = (e: any) => {
     e.preventDefault();
 
-    let errors = {} as { email: string; password: string; agreeCheckbox: string };
+    let errors = {} as { email: string; password: string; agreeCheckbox: string; emailInPassword: string };
 
     if (!formData.email) {
       errors.email = 'This field cannot be left blank';
@@ -65,6 +75,10 @@ const SignUp = () => {
       errors.password = 'Use 8 or more characters with a mix of letters, numbers and symbols';
     }
 
+    if (formData.password.includes(formData.email) && formData.password.length >= 3) {
+      errors.emailInPassword = 'The password should not contain parts of the username';
+    }
+
     if (!formData.agreeCheckbox) {
       errors.agreeCheckbox = 'Please accept the terms and conditions to finish the signup';
     }
@@ -72,6 +86,10 @@ const SignUp = () => {
     if (Object.keys(errors).length !== 0) {
       setErrors(errors);
     }
+  };
+
+  const handleSubmit = (e: any) => {
+    handleValidate(e);
   };
 
   return (
@@ -165,6 +183,7 @@ const SignUp = () => {
                       placeholder="Email"
                       value={formData.email}
                       onChange={handleChange}
+                      onBlur={handleValidate}
                       className="h-full w-full m-0 px-[6px] py-2 rounded-[3px] text-[16px] leading-4 border-0 placeholder-extraLightGray"
                     />
                   </div>
@@ -180,6 +199,7 @@ const SignUp = () => {
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
+                      onBlur={handleValidate}
                       type={showPassword ? 'text' : 'password'}
                       className="h-full w-full m-0 px-[6px] py-2 rounded-[3px] text-[16px] leading-4 border-0 placeholder-extraLightGray"
                       placeholder="Password"
@@ -194,13 +214,20 @@ const SignUp = () => {
                       alt=""
                     />
                   </div>
-                  <p className={styles.inputError}>
-                    {errors.password && (
+                  {errors.password && (
+                    <p className={`${styles.inputError} ${errors.emailInPassword ? '!mb-0' : ''}`}>
                       <span className={styles.textError} role="img" aria-label="Error">
                         {errors.password}
                       </span>
-                    )}
-                  </p>
+                    </p>
+                  )}
+                  {errors.emailInPassword && (
+                    <p className={styles.inputError}>
+                      <span className={styles.textError} role="img" aria-label="Error">
+                        {errors.emailInPassword}
+                      </span>
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm leading-[18px] mb-4 pl-[30px] relative">
